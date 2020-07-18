@@ -1,12 +1,12 @@
 <?php
 
-namespace backend\assets;
+namespace site\assets;
 
 use yii\web\AssetBundle;
 
 /**
  * Class DatetimepickerAsset
- * @package backend\assets
+ * @package site\assets
  */
 class DatetimepickerAsset extends AssetBundle
 {
