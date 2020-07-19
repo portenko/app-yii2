@@ -51,7 +51,7 @@ class PostsSearch extends Posts
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'sort' => SORT_ASC
+                    'publish_at' => SORT_DESC
                 ],
             ],
         ]);

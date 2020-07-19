@@ -18,7 +18,6 @@ class DatetimepickerAsset extends AssetBundle
         'jquery.datetimepicker.full.min.js',
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        'site\assets\DefaultAsset',
     ];
 }

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "authors".
@@ -15,6 +16,7 @@ use Yii;
  * @property string|null $lang
  * @property int $created_at
  * @property int $updated_at
+ * @property Authors[] $listMap
  */
 class Authors extends ActiveRecord
 {
@@ -53,5 +55,20 @@ class Authors extends ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * @param string $type
+     * @return array
+     */
+    public static function listMap($type = 'posts')
+    {
+        $authors = self::find()
+            ->where([
+                'status' => self::STATUS_ACTIVE,
+            ])
+            ->orderBy(['name' => SORT_ASC])
+            ->all();
+        return ArrayHelper::map($authors, 'id', 'name');
     }
 }

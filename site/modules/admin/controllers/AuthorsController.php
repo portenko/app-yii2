@@ -122,6 +122,7 @@ class AuthorsController extends Controller
     public function actionDeletePic($id)
     {
         $model = $this->findModel($id);
+        @unlink(Yii::getAlias('@uploads/authors/'.$model->pic));
         $model->pic = null;
         $model->save(false);
         return $this->redirect(['update', 'id' => $id]);

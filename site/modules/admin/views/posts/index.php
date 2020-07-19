@@ -40,49 +40,52 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'name',
                     'format' => 'html',
                     'value' => function($model){
-                        $pic = '';
-                        if(!empty($model->pic)){
-                            $pic = Html::img('/uploads/authors/'.$model->pic, ['class' => 'mr-2', 'style' => 'max-width:20px;']);
+                        $cover = '';
+                        if(!empty($model->cover)){
+                            $cover = Html::img('/uploads/posts/'.$model->cover, ['class' => 'mr-2', 'style' => 'max-width:20px;']);
                         }
-                        return Html::a($pic.$model->name, ['update', 'id' => $model->id]);
+                        return Html::a($cover.$model->name, ['update', 'id' => $model->id]);
                     }
                 ],
-                'category_id',
-                'name',
-                'url_slug:url',
-                'lead',
-                //'content:ntext',
-                //'cover',
-                //'cover_alt',
-                //'status',
-                //'type',
-                //'lang',
-                //'meta_title',
-                //'meta_description',
-                //'meta_keywords',
-                //'alternate_id',
-                //'sort',
-                //'author_id',
-                //'recommended_posts',
+                [
+                    'attribute' => 'category_id',
+                    'format' => 'html',
+                    'value' => function($model){
+                        return $model->category->name??'——';
+                    }
+                ],
+                [
+                    'attribute' => 'author_id',
+                    'format' => 'html',
+                    'value' => function($model){
+                        return $model->author->name??'——';
+                    }
+                ],
                 [
                     'attribute' => 'publish_at',
                     'value' => function($model){
-                        return Yii::$app->formatter->asDatetime($model->publish_at, 'dd.MM.yyyy hh:i');
+                        return $model->publishAt;
                     }
                 ],
-                //'created_at',
-                //'updated_at',
-
                 [
+                    'attribute' => 'lang',
+                    'filter' => Yii::$app->params['languages']
+                ],
+                [
+                    'header' => 'Actions',
                     'class' => 'yii\grid\ActionColumn',
-                    'template' => '{copy}{delete}',
-                    'contentOptions' => ['class' => 'uk-text-right'],
+                    'template' => '{status}{delete}',
+                    'headerOptions' => ['class' => 'text-center', 'style' => 'width: 120px;'],
+                    'contentOptions' => ['class' => 'text-center'],
                     'buttons' => [
-                        'copy' => function ($url, $model){
-                            return Html::a('<i class="fas fa-copy"></i>', $url, ['class' => 'btn btn-sm uk-margin-small-right', 'uk-tooltip' => Yii::t('app', 'Копировать'), 'data-method' => 'post', 'data-pjax' => '0']);
+                        'status' => function ($url, $model){
+                            return Html::a('<i class="fas fa-toggle'.($model->status === $model::STATUS_ACTIVE ? '-on text-success' : '-off text-danger').'"></i>', $url, ['class' => 'btn btn-sm', 'title' => 'Status', 'data-method' => 'post', 'data-pjax' => '0']);
+                        },
+                        'update' => function ($url, $model){
+                            return Html::a('<i class="fas fa-edit"></i>', $url, ['class' => 'btn btn-sm', 'title' => 'Edit', 'data-method' => 'post', 'data-pjax' => '0']);
                         },
                         'delete' => function ($url, $model){
-                            return Html::a('<i class="far fa-trash-alt"></i>', $url, ['class' => 'btn btn-danger btn-sm', 'data-toggle' => 'tooltip', 'title' => Yii::t('app', 'Удалить'), 'data-confirm' => Yii::t('app', 'Вы действительно хотите удалить эту запись?'), 'data-method' => 'post',  'data-pjax' => '0']);
+                            return Html::a('<i class="far fa-trash-alt text-danger"></i>', $url, ['class' => 'btn btn-sm', 'data-toggle' => 'tooltip', 'title' => 'Delete', 'data-confirm' => 'Are you sure you want to delete this record?', 'data-method' => 'post',  'data-pjax' => '0']);
                         },
                     ],
                 ],

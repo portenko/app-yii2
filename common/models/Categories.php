@@ -16,7 +16,7 @@ use yii\helpers\ArrayHelper;
  * @property int|null $sort
  * @property int $created_at
  * @property int $updated_at
- * @property Categories $listMap
+ * @property Categories[] $listMap
  */
 class Categories extends ActiveRecord
 {

@@ -3,12 +3,15 @@
 namespace site\modules\admin\controllers;
 
 use Yii;
+use common\models\UploadForm;
 use common\models\Posts;
 use common\models\PostsSearch;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 /**
- * PostsController implements the CRUD actions for Posts model.
+ * Class PostsController
+ * @package site\modules\admin\controllers
  */
 class PostsController extends Controller
 {
@@ -28,16 +31,27 @@ class PostsController extends Controller
     }
 
     /**
-     * Creates a new Posts model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
         $model = new Posts();
+        $uploadForm = new UploadForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save())
         {
+            if (Yii::$app->request->isPost)
+            {
+                $uploadForm->imageFile = UploadedFile::getInstance($uploadForm, 'imageFile');
+                $uploadForm->folder = $model::tableName();
+                $uploadForm->prefix = uniqid();
+                $uploadForm->imageWidth = 400;
+                $uploadForm->imageHeight = 400;
+                if ($uploadForm->upload()) {
+                    $model->cover = $uploadForm->imageName;
+                    $model->save(false);
+                }
+            }
             if(Yii::$app->request->post('save_close')){
                 return $this->redirect(['index']);
             }
@@ -48,26 +62,34 @@ class PostsController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'uploadForm' => $uploadForm,
         ]);
     }
 
     /**
-     * Updates an existing Posts model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $uploadForm = new UploadForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save())
         {
-
-
-
-
+            if (Yii::$app->request->isPost)
+            {
+                $uploadForm->imageFile = UploadedFile::getInstance($uploadForm, 'imageFile');
+                $uploadForm->folder = $model::tableName();
+                $uploadForm->prefix = uniqid();
+                $uploadForm->imageWidth = 400;
+                $uploadForm->imageHeight = 400;
+                if ($uploadForm->upload()) {
+                    $model->cover = $uploadForm->imageName;
+                    $model->save(false);
+                }
+            }
             if(Yii::$app->request->post('save_close')){
                 return $this->redirect(['index']);
             }
@@ -75,6 +97,7 @@ class PostsController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'uploadForm' => $uploadForm,
         ]);
     }
 
@@ -90,6 +113,20 @@ class PostsController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     */
+    public function actionDeleteCover($id)
+    {
+        $model = $this->findModel($id);
+        @unlink(Yii::getAlias('@uploads/posts/'.$model->cover));
+        $model->cover = null;
+        $model->save(false);
+        return $this->redirect(['update', 'id' => $id]);
     }
 
     /**

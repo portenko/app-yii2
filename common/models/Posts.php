@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "posts".
@@ -28,6 +29,9 @@ use Yii;
  * @property int $publish_at
  * @property int $created_at
  * @property int $updated_at
+ *
+ * @property Categories|null $category
+ * @property Authors|null $author
  */
 class Posts extends ActiveRecord
 {
@@ -45,13 +49,12 @@ class Posts extends ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'publishAt'], 'required'],
             [['category_id', 'status', 'alternate_id', 'sort', 'author_id', 'publish_at', 'created_at', 'updated_at'], 'integer'],
             [['content'], 'string'],
             [['name', 'url_slug', 'lead', 'cover', 'cover_alt', 'type', 'lang', 'meta_keywords', 'recommended_posts'], 'string', 'max' => 255],
             [['meta_title'], 'string', 'max' => 65],
             [['meta_description'], 'string', 'max' => 120],
-            [['publishAt'], 'safe']
         ];
     }
 
@@ -68,7 +71,7 @@ class Posts extends ActiveRecord
             'lead' => 'Lead',
             'content' => 'Content',
             'cover' => 'Cover',
-            'cover_alt' => 'Cover alternative text',
+            'cover_alt' => 'Alternative text for cover',
             'status' => 'Status',
             'type' => 'Type',
             'lang' => 'Lang',
@@ -80,6 +83,7 @@ class Posts extends ActiveRecord
             'author_id' => 'Author',
             'recommended_posts' => 'Recommended posts',
             'publish_at' => 'Publish at',
+            'publishAt' => 'Publish at',
             'created_at' => 'Created at',
             'updated_at' => 'Updated at',
         ];
@@ -93,11 +97,47 @@ class Posts extends ActiveRecord
     }
 
     /**
-     * @return string
+     * @return string|null
      * @throws \yii\base\InvalidConfigException
      */
     public function getPublishAt(){
-        return date("Y-m-d\TH:i:s", $this->publish_at);
-        //return Yii::$app->formatter->asDatetime($this->publish_at, "Y-m-d\TH:i:s");
+        return $this->publish_at?Yii::$app->formatter->asDatetime($this->publish_at, "dd.MM.Y H:i"):null;
+    }
+
+    /**
+     * @param string $type
+     * @return array
+     */
+    public function getAlternateListMap($type = 'posts')
+    {
+        $posts = self::find()
+            ->where([
+                'and', [
+                    'status' => self::STATUS_ACTIVE,
+                    'type' => $type
+                ],
+                [
+                    'not', ['id' => $this->id]
+                ]
+            ])
+            ->orderBy(['publish_at' => SORT_DESC])
+            ->all();
+        return ArrayHelper::map($posts, 'id', 'name');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategory()
+    {
+        return $this->hasOne(Categories::class, ['id' => 'category_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAuthor()
+    {
+        return $this->hasOne(Authors::class, ['id' => 'author_id']);
     }
 }
