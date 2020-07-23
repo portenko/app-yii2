@@ -16,7 +16,7 @@ class AdminAsset extends AssetBundle
         'css/admin.css',
     ];
     public $js = [
-        'js/slugify.js'
+        'js/slugify.js',
     ];
     public $depends = [
         'site\assets\DefaultAsset',
