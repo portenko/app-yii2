@@ -31,32 +31,33 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'code',
                 'format' => 'html',
                 'value' => function($model){
-                    return Html::a($model->name, ['update', 'id' => $model->id]);
+                    return Html::a($model->code, ['update', 'id' => $model->id]);
                 }
             ],
+            'name',
             'value',
             //'data:ntext',
             //'created_at',
             //'updated_at',
 
-            [
-                'header' => 'Actions',
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{status} {delete}',
-                'headerOptions' => ['class' => 'text-center', 'style' => 'width: 80px;'],
-                'contentOptions' => ['class' => 'text-center'],
-                'buttons' => [
-                    'status' => function ($url, $model){
-                        return Html::a('<i class="fas fa-toggle'.($model->status === $model::STATUS_ACTIVE ? '-on text-success' : '-off text-danger').'"></i>', $url, ['class' => 'btn btn-sm', 'title' => 'Status', 'data-method' => 'post', 'data-pjax' => '0']);
-                    },
-                    'update' => function ($url, $model){
-                        return Html::a('<i class="fas fa-edit"></i>', $url, ['class' => 'btn btn-sm', 'title' => 'Edit', 'data-method' => 'post', 'data-pjax' => '0']);
-                    },
-                    'delete' => function ($url, $model){
-                        return Html::a('<i class="far fa-trash-alt text-danger"></i>', $url, ['class' => 'btn btn-sm', 'data-toggle' => 'tooltip', 'title' => 'Delete', 'data-confirm' => 'Are you sure you want to delete this record?', 'data-method' => 'post',  'data-pjax' => '0']);
-                    },
-                ],
-            ],
+//            [
+//                'header' => 'Actions',
+//                'class' => 'yii\grid\ActionColumn',
+//                'template' => '{status} {delete}',
+//                'headerOptions' => ['class' => 'text-center', 'style' => 'width: 80px;'],
+//                'contentOptions' => ['class' => 'text-center'],
+//                'buttons' => [
+//                    'status' => function ($url, $model){
+//                        return Html::a('<i class="fas fa-toggle'.($model->status === $model::STATUS_ACTIVE ? '-on text-success' : '-off text-danger').'"></i>', $url, ['class' => 'btn btn-sm', 'title' => 'Status', 'data-method' => 'post', 'data-pjax' => '0']);
+//                    },
+//                    'update' => function ($url, $model){
+//                        return Html::a('<i class="fas fa-edit"></i>', $url, ['class' => 'btn btn-sm', 'title' => 'Edit', 'data-method' => 'post', 'data-pjax' => '0']);
+//                    },
+//                    'delete' => function ($url, $model){
+//                        return Html::a('<i class="far fa-trash-alt text-danger"></i>', $url, ['class' => 'btn btn-sm', 'data-toggle' => 'tooltip', 'title' => 'Delete', 'data-confirm' => 'Are you sure you want to delete this record?', 'data-method' => 'post',  'data-pjax' => '0']);
+//                    },
+//                ],
+//            ],
         ],
     ]); ?>
 </div>

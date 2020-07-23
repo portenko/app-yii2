@@ -5,10 +5,12 @@ namespace site\modules\admin\controllers;
 use Yii;
 use common\models\Options;
 use common\models\OptionsSearch;
+use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
 
 /**
- * OptionsController implements the CRUD actions for Options model.
+ * Class OptionsController
+ * @package site\modules\admin\controllers
  */
 class OptionsController extends Controller
 {
@@ -28,21 +30,24 @@ class OptionsController extends Controller
     }
 
     /**
-     * Creates a new Options model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
         $model = new Options();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save())
+        if ($model->load(Yii::$app->request->post()))
         {
-            if(Yii::$app->request->post('save_close')){
-                return $this->redirect(['index']);
+            if(isset($model->json) && count($model->json)){
+                $model->data = Json::encode($model->json);
             }
-            else {
-                return $this->redirect(['update', 'id' => $model->id]);
+            if($model->save()){
+                if(Yii::$app->request->post('save_close')){
+                    return $this->redirect(['index']);
+                }
+                else {
+                    return $this->redirect(['update', 'id' => $model->id]);
+                }
             }
         }
 
@@ -52,20 +57,23 @@ class OptionsController extends Controller
     }
 
     /**
-     * Updates an existing Options model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save())
+        if ($model->load(Yii::$app->request->post()))
         {
-            if(Yii::$app->request->post('save_close')){
-                return $this->redirect(['index']);
+            if(isset($model->json) && count($model->json)){
+                $model->data = Json::encode($model->json);
+            }
+            if($model->save()){
+                if(Yii::$app->request->post('save_close')){
+                    return $this->redirect(['index']);
+                }
             }
         }
 
@@ -75,11 +83,11 @@ class OptionsController extends Controller
     }
 
     /**
-     * Deletes an existing Options model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -89,11 +97,9 @@ class OptionsController extends Controller
     }
 
     /**
-     * Finds the Options model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Options the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return Options|mixed|null
+     * @throws NotFoundHttpException
      */
     public function findModel($id)
     {

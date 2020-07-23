@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "posts".
@@ -32,6 +33,7 @@ use yii\helpers\ArrayHelper;
  *
  * @property Categories|null $category
  * @property Authors|null $author
+ * @property Posts[]|null $listMap
  */
 class Posts extends ActiveRecord
 {
@@ -55,6 +57,7 @@ class Posts extends ActiveRecord
             [['name', 'url_slug', 'lead', 'cover', 'cover_alt', 'type', 'lang', 'meta_keywords', 'recommended_posts'], 'string', 'max' => 255],
             [['meta_title'], 'string', 'max' => 65],
             [['meta_description'], 'string', 'max' => 120],
+            [['recommendedPosts'], 'safe'],
         ];
     }
 
@@ -82,6 +85,7 @@ class Posts extends ActiveRecord
             'sort' => 'Sort',
             'author_id' => 'Author',
             'recommended_posts' => 'Recommended posts',
+            'recommendedPosts' => 'Recommended posts',
             'publish_at' => 'Publish at',
             'publishAt' => 'Publish at',
             'created_at' => 'Created at',
@@ -126,6 +130,32 @@ class Posts extends ActiveRecord
     }
 
     /**
+     * @return string
+     */
+    public function getIdName()
+    {
+        return $this->id . ' - ' . $this->name;
+    }
+
+    /**
+     * @param string $type
+     * @return array
+     */
+    public static function listMap($type = 'posts')
+    {
+        $posts = self::find()
+            ->where([
+                'and', [
+                    'status' => self::STATUS_ACTIVE,
+                    'type' => $type
+                ]
+            ])
+            ->orderBy(['publish_at' => SORT_DESC])
+            ->all();
+        return ArrayHelper::map($posts, 'id', 'idName');
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getCategory()
@@ -140,4 +170,21 @@ class Posts extends ActiveRecord
     {
         return $this->hasOne(Authors::class, ['id' => 'author_id']);
     }
+
+    /**
+     * @param $value
+     */
+    public function setRecommendedPosts($value)
+    {
+        $this->recommended_posts = Json::encode($value);
+    }
+
+    /**
+     * @return array|string
+     */
+    public function getRecommendedPosts()
+    {
+        return !empty($this->recommended_posts) ? Json::decode($this->recommended_posts) : [];
+    }
+
 }

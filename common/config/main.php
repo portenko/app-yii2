@@ -12,6 +12,9 @@ return [
         'assetManager' => [
             'appendTimestamp' => true,
         ],
+        'option' => [
+            'class' => '\common\components\Option',
+        ]
     ],
 
 ];

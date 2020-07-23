@@ -48,6 +48,11 @@ class OptionsSearch extends Options
             'pagination' => [
                 'pageSize' => 100,
             ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC
+                ],
+            ],
         ]);
 
 

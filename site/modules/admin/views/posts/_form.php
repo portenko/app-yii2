@@ -2,9 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use \common\models\Posts;
 use \common\models\Categories;
 use \common\models\Authors;
 use site\assets\DatetimepickerAsset;
+use \site\assets\TinymceAsset;
+use \site\assets\Select2Asset;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Posts */
@@ -12,6 +15,8 @@ use site\assets\DatetimepickerAsset;
 /* @var $form yii\widgets\ActiveForm */
 
 DatetimepickerAsset::register($this);
+TinymceAsset::register($this);
+Select2Asset::register($this);
 
 ?>
 
@@ -39,7 +44,10 @@ DatetimepickerAsset::register($this);
 
                 <?= $form->field($model, 'content')->textarea(['rows' => 10]) ?>
 
-                <?= $form->field($model, 'recommended_posts')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'recommendedPosts')->dropDownList(Posts::listMap(), [
+                    'multiple' => true,
+                    'class' => 'form-control select2'
+                ]) ?>
 
                 <?= $form->field($model, 'alternate_id', ['options' => ['class' => 'mb-0']])
                     ->dropDownList($model->getAlternateListMap(), ['prompt' => '——']) ?>
@@ -101,6 +109,17 @@ DatetimepickerAsset::register($this);
 
 </div>
 <?php
+
+//$roots = Yii::$app->controllerMap['elfinder']['roots'];
+//foreach ($roots as $key => $root){
+//    if(isset($root['options'])){
+//        $root['baseUrl'] = 'http://site123.com/uploads';
+//        $roots[$key] = $root;
+//    }
+//}
+//Yii::$app->controllerMap['elfinder']['roots'] = $roots;
+
+
 $js = <<<JS
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -129,6 +148,9 @@ $js = <<<JS
         lang: 'en',
         format: 'd.m.Y H:i',
     });
+    
+    tinymceCreate('#posts-content');
+    $('.select2').select2({width: '100%'});
 JS;
 
-$this->registerJs($js, $this::POS_READY);
+$this->registerJs($js, $this::POS_END);

@@ -2,6 +2,7 @@
 
 namespace site\modules\admin\controllers;
 
+use common\models\Options;
 use common\models\UploadForm;
 use Yii;
 use common\models\Authors;
@@ -10,7 +11,8 @@ use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 /**
- * AuthorsController implements the CRUD actions for Authors model.
+ * Class AuthorsController
+ * @package site\modules\admin\controllers
  */
 class AuthorsController extends Controller
 {
@@ -44,8 +46,8 @@ class AuthorsController extends Controller
                 $uploadForm->imageFile = UploadedFile::getInstance($uploadForm, 'imageFile');
                 $uploadForm->folder = $model::tableName();
                 $uploadForm->prefix = uniqid();
-                $uploadForm->imageWidth = 143;
-                $uploadForm->imageHeight = 143;
+                $uploadForm->imageWidth = Options::val('AUTHORS_IMAGE', 'width');
+                $uploadForm->imageHeight = Options::val('AUTHORS_IMAGE', 'height');
                 if ($uploadForm->upload()) {
                     $model->pic = $uploadForm->imageName;
                     $model->save(false);
@@ -82,8 +84,8 @@ class AuthorsController extends Controller
                 $uploadForm->imageFile = UploadedFile::getInstance($uploadForm, 'imageFile');
                 $uploadForm->folder = $model::tableName();
                 $uploadForm->prefix = uniqid();
-                $uploadForm->imageWidth = 143;
-                $uploadForm->imageHeight = 143;
+                $uploadForm->imageWidth = Options::val('AUTHORS_IMAGE', 'width');
+                $uploadForm->imageHeight = Options::val('AUTHORS_IMAGE', 'height');
                 if ($uploadForm->upload()) {
                     $model->pic = $uploadForm->imageName;
                     $model->save(false);

@@ -23,25 +23,16 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
 
-    <?php if(!empty($model->template) && !is_file(Yii::getAlias('@site/modules/admin/views/options/templates' . $model->template . '.php'))){ ?>
-
-        <?= $this->render('templates/'. $model->template, compact('form', 'model')) ?>
-
-    <?php } else { ?>
-
-
-        <div class="row">
-            <div class="col-sm-8">
-                <?= $form->field($model, 'value')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col-sm-4">
-                <?= $form->field($model, 'template')->textInput(['maxlength' => true]) ?>
-            </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <?= $form->field($model, 'value')->textInput(['maxlength' => true]) ?>
         </div>
+        <div class="col-sm-4">
+            <?= $form->field($model, 'template')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
 
-        <?= $form->field($model, 'data')->textarea(['rows' => 4])->label('Data (JSON format)') ?>
-
-    <?php } ?>
+    <?= $form->field($model, 'data')->textarea(['rows' => 4])->label('Data (JSON format)') ?>
 
     <div>
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

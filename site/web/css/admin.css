@@ -31,6 +31,10 @@ a {
 .dropdown-menu {
   border-radius: 1px;
 }
+.select2-selection {
+  border-radius: 1px !important;
+  border: 1px solid #ced4da !important;
+}
 .btn-primary {
   color: #fff;
   background-color: #337ab7;
@@ -264,4 +268,7 @@ body.elfinder .ef-container iframe span.elfinder-navbar-root {
 }
 .input-url-slug:focus {
   border: 1px dashed;
+}
+.ck-editor__editable {
+  height: 300px;
 }

@@ -2,6 +2,7 @@
 
 namespace site\modules\admin\controllers;
 
+use common\models\Options;
 use Yii;
 use common\models\UploadForm;
 use common\models\Posts;
@@ -45,8 +46,8 @@ class PostsController extends Controller
                 $uploadForm->imageFile = UploadedFile::getInstance($uploadForm, 'imageFile');
                 $uploadForm->folder = $model::tableName();
                 $uploadForm->prefix = uniqid();
-                $uploadForm->imageWidth = 400;
-                $uploadForm->imageHeight = 400;
+                $uploadForm->imageWidth = Options::val('POSTS_COVER', 'width');
+                $uploadForm->imageHeight = Options::val('POSTS_COVER', 'height');
                 if ($uploadForm->upload()) {
                     $model->cover = $uploadForm->imageName;
                     $model->save(false);
@@ -83,8 +84,8 @@ class PostsController extends Controller
                 $uploadForm->imageFile = UploadedFile::getInstance($uploadForm, 'imageFile');
                 $uploadForm->folder = $model::tableName();
                 $uploadForm->prefix = uniqid();
-                $uploadForm->imageWidth = 400;
-                $uploadForm->imageHeight = 400;
+                $uploadForm->imageWidth = Options::val('POSTS_COVER', 'width');
+                $uploadForm->imageHeight = Options::val('POSTS_COVER', 'height');
                 if ($uploadForm->upload()) {
                     $model->cover = $uploadForm->imageName;
                     $model->save(false);

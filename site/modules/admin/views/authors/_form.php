@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Options;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -7,6 +8,10 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\Authors */
 /* @var $uploadForm common\models\UploadForm */
 /* @var $form yii\widgets\ActiveForm */
+
+$imageWidth = Options::val('AUTHORS_IMAGE', 'width');
+$imageHeight = Options::val('AUTHORS_IMAGE', 'height');
+
 ?>
 
 <div class="authors-form card p-2">
@@ -52,7 +57,7 @@ use yii\widgets\ActiveForm;
                 <div class="col-sm-12">
                     <?= $form->field($uploadForm, 'imageFile', [
                         'template' => "{label}<div>{input}\n{hint}\n{error}</div>"
-                    ])->fileInput(['accept' => 'image/*'])->label($model->getAttributeLabel('pic').' (143x143)') ?>
+                    ])->fileInput(['accept' => 'image/*'])->label($model->getAttributeLabel('pic')." ({$imageWidth}x{$imageHeight})") ?>
                 </div>
             </div>
             <div class="row">

@@ -21,12 +21,14 @@ class m200705_102909_options extends Migration
             'value' => $this->string()->null(),
             'data' => $this->text()->null(),
             'template' => $this->string()->null(),
+            'type' => $this->string()->null()->defaultValue('options'),
             'created_at' => $this->integer()->notNull()->unsigned(),
             'updated_at' => $this->integer()->notNull()->unsigned(),
         ], $tableOptions);
 
         $this->createIndex('idx-options-code', 'options', 'code');
         $this->createIndex('idx-options-name', 'options', 'name');
+        $this->createIndex('idx-options-type', 'options', 'type');
     }
 
     public function safeDown()

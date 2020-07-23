@@ -9,7 +9,8 @@ return [
     'admin/<controller:[\w-]+>/<action:[\w-]+>' => 'admin/<controller>/<action>',
     'admin/<controller:[\w-]+>/<action:[\w-]+>/<app:\d+>' => 'admin/<controller>/<action>',
 
-    'elfinder/<action>' => 'elfinder/<action>',
+    'elfinder' => 'elfinder',
+    'elfinder/<_a:[\w\-]+>' => 'elfinder/<_a>',
 
     '' => 'site/index',
     '<action:[\w\-]+>' => 'site/<action>',

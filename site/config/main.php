@@ -1,4 +1,5 @@
 <?php
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -55,18 +56,18 @@ return [
     ],
     'controllerMap' => [
         'elfinder' => [
-            //'class' => 'mihaildev\elfinder\PathController',
             'class' => 'mihaildev\elfinder\Controller',
             'access' => ['@'],
+            'disabledCommands' => ['netmount'],
             'roots' => [
                 [
-                    'options' => ['URL' => ''],
-                    'baseUrl' => '@uploads',
+                    'options' => true,
+                    'baseUrl' => $params['siteUrl'].'uploads',
                     'basePath' => '@uploads',
                     'name' => Yii::t('app','Files'),
                 ],
             ],
-        ]
+        ],
     ],
     'params' => $params,
 ];
