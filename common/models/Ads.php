@@ -36,10 +36,11 @@ class Ads extends ActiveRecord
     public function rules()
     {
         return [
-            [['code', 'name', 'value', 'created_at', 'updated_at'], 'required'],
+            [['code', 'name', 'value'], 'required'],
             [['data'], 'string'],
-            [['status', 'is_unlimited', 'date_from', 'date_to', 'created_at', 'updated_at'], 'integer'],
+            [['status', 'is_unlimited', 'created_at', 'updated_at'], 'integer'],
             [['code', 'name', 'value', 'lang'], 'string', 'max' => 255],
+            [['date_from', 'date_to', 'dateFrom', 'dateTo'], 'safe']
         ];
     }
 
@@ -56,11 +57,43 @@ class Ads extends ActiveRecord
             'data' => 'Data',
             'status' => 'Status',
             'lang' => 'Lang',
-            'is_unlimited' => 'Is Unlimited',
-            'date_from' => 'Date From',
-            'date_to' => 'Date To',
+            'is_unlimited' => 'Is unlimited?',
+            'date_from' => 'Date from',
+            'dateFrom' => 'Date from',
+            'date_to' => 'Date to',
+            'dateTo' => 'Date to',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * @param $value
+     */
+    public function setDateFrom($value){
+        $this->date_from = strtotime($value);
+    }
+
+    /**
+     * @return string|null
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function getDateFrom(){
+        return $this->date_from?Yii::$app->formatter->asDatetime($this->date_from, "dd.MM.Y H:i"):null;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setDateTo($value){
+        $this->date_to = strtotime($value);
+    }
+
+    /**
+     * @return string|null
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function getDateTo(){
+        return $this->date_to?Yii::$app->formatter->asDatetime($this->date_to, "dd.MM.Y H:i"):null;
     }
 }

@@ -26,16 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'headerRowOptions' => ['class' => 'thead-blue'],
             'layout' => '{items}{pager}',
             'columns' => [
-                [
-                    'attribute' => 'id',
-                    'label' => '#',
-                    'format' => 'raw',
-                    'value' => function($model){
-                        return Html::a($model->id, ['pages/update', 'id' => $model->id]);
-                    },
-                    'contentOptions' => ['class' => 'uk-text-center'],
-                    'headerOptions' => ['class' => 'uk-text-center', 'style' => 'width:20px'],
-                ],
+                'id',
                 [
                     'attribute' => 'name',
                     'format' => 'html',

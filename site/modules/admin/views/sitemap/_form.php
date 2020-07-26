@@ -62,4 +62,4 @@ $js = <<<JS
     });
 JS;
 
-$this->registerJs($js, $this::POS_END);
+$this->registerJs($js, $this::POS_READY);

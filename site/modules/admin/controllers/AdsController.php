@@ -8,7 +8,8 @@ use common\models\AdsSearch;
 use yii\web\NotFoundHttpException;
 
 /**
- * AdsController implements the CRUD actions for Ads model.
+ * Class AdsController
+ * @package site\modules\admin\controllers
  */
 class AdsController extends Controller
 {

@@ -55,7 +55,6 @@ class Sitemap extends ActiveRecord
         ];
     }
 
-
     /**
      * @param $value
      */
