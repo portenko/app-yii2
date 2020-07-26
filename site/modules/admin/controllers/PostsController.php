@@ -103,11 +103,11 @@ class PostsController extends Controller
     }
 
     /**
-     * Deletes an existing Posts model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -131,11 +131,9 @@ class PostsController extends Controller
     }
 
     /**
-     * Finds the Posts model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Posts the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return Posts|mixed|null
+     * @throws NotFoundHttpException
      */
     public function findModel($id)
     {

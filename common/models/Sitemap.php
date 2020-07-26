@@ -31,9 +31,10 @@ class Sitemap extends ActiveRecord
     public function rules()
     {
         return [
-            [['loc', 'created_at', 'updated_at'], 'required'],
+            [['loc'], 'required'],
             [['lastmod', 'created_at', 'updated_at'], 'integer'],
             [['loc', 'changefreq', 'priority'], 'string', 'max' => 255],
+            [['lastMod'], 'safe'],
         ];
     }
 
@@ -46,10 +47,27 @@ class Sitemap extends ActiveRecord
             'id' => 'ID',
             'loc' => 'Loc',
             'lastmod' => 'Lastmod',
+            'lastMod' => 'Lastmod',
             'changefreq' => 'Changefreq',
             'priority' => 'Priority',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+
+    /**
+     * @param $value
+     */
+    public function setLastMod($value){
+        $this->lastmod = strtotime($value);
+    }
+
+    /**
+     * @return string|null
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function getLastMod(){
+        return Yii::$app->formatter->asDatetime($this->lastmod??time(), "dd.MM.Y");
     }
 }

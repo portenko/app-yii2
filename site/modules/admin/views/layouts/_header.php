@@ -59,7 +59,7 @@
                 </li>
             </ul>
             <div class="form-inline my-2 my-lg-0">
-                <a class="nav-link btn-link" href="/admin/profile/">admin</a>
+                <a class="nav-link btn-link" href="/admin/profile/"><?= Yii::$app->user->name ?></a>
                 <a class="btn my-2 my-sm-0 fas fa-sign-out-alt btn-link" data-method="post" href="/admin/logout/"></a>
             </div>
         </div>

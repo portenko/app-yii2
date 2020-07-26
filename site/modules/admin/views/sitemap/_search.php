@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\OptionsSearch */
+/* @var $model common\models\SitemapSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="options-search">
+<div class="sitemap-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,13 +17,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'code') ?>
+    <?= $form->field($model, 'loc') ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?= $form->field($model, 'lastmod') ?>
 
-    <?= $form->field($model, 'value') ?>
+    <?= $form->field($model, 'changefreq') ?>
 
-    <?= $form->field($model, 'data') ?>
+    <?= $form->field($model, 'priority') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 

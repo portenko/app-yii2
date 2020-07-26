@@ -1,9 +1,9 @@
 <?php
+
 namespace common\models;
 
 use Yii;
 use yii\base\NotSupportedException;
-use yii\behaviors\TimestampBehavior;
 use yii\web\IdentityInterface;
 
 /**
@@ -20,6 +20,7 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * @property array $statuses
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -34,16 +35,6 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -51,6 +42,31 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
     }
+
+    /**
+     * @return array|string[]
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'username' => 'Username',
+            'first_name' => 'First name',
+            'last_name' => 'Last name',
+            'auth_key' => 'Auth key',
+            'password' => 'Password',
+            'password_hash' => 'Password Hash',
+            'password_reset_token' => 'Password Reset Token',
+            'email' => 'Email',
+            'status' => 'Status',
+            'role' => 'Role',
+            'lang' => 'Language',
+            'verification_token' => 'Verification token',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At'
+        ];
+    }
+
 
     /**
      * {@inheritdoc}
@@ -202,5 +218,17 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getStatuses()
+    {
+        return [
+            self::STATUS_ACTIVE => 'Active',
+            self::STATUS_INACTIVE => 'Inactive',
+            self::STATUS_DELETED => 'Deleted',
+        ];
     }
 }

@@ -272,3 +272,24 @@ body.elfinder .ef-container iframe span.elfinder-navbar-root {
 .ck-editor__editable {
   height: 300px;
 }
+.hint-example {
+  color: #6c757d;
+  font-size: 80%;
+  font-style: italic;
+}
+.options-form .roles {
+  padding: 3px 4px 0 3px;
+  border: 1px solid #ced4da;
+  height: calc(1.5em + .75rem + 2px);
+}
+.options-form .roles .role {
+  margin-bottom: 3px;
+  padding-right: 4px;
+}
+.options-form .roles .role i {
+  margin-left: 2px;
+}
+.options-form .roles .role:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}

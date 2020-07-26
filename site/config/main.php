@@ -18,6 +18,7 @@ return [
             'csrfParam' => '_csrf-site',
         ],
         'user' => [
+            'class' => 'common\user\User',
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'loginUrl' => ['admin/login'],
@@ -61,7 +62,6 @@ return [
             'disabledCommands' => ['netmount'],
             'roots' => [
                 [
-                    'options' => true,
                     'baseUrl' => $params['siteUrl'].'uploads',
                     'basePath' => '@uploads',
                     'name' => Yii::t('app','Files'),

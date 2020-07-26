@@ -1,16 +1,13 @@
 <?php
 
-use yii\helpers\Html;
-
 /* @var $this yii\web\View */
-/* @var $model common\models\User */
+/* @var $model common\models\Sitemap */
 
 $this->title = 'Update: #' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Sitemap', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title ;
-
 ?>
-<div class="user-update">
+<div class="sitemap-update">
 
     <?= $this->render('_form', [
         'model' => $model,

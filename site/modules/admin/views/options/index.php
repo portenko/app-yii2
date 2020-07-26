@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'headerRowOptions' => ['class' => 'thead-blue'],
         'layout' => '{items}{pager}',
         'columns' => [
-            'id',
+            //'id',
             [
                 'attribute' => 'code',
                 'format' => 'html',
@@ -36,9 +36,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'name',
             'value',
-            //'data:ntext',
-            //'created_at',
-            //'updated_at',
+            [
+                'attribute' => 'type',
+                'filter' => \common\models\Options::getTypes()
+            ]
 
 //            [
 //                'header' => 'Actions',

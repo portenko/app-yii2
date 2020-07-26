@@ -110,16 +110,6 @@ Select2Asset::register($this);
 </div>
 <?php
 
-//$roots = Yii::$app->controllerMap['elfinder']['roots'];
-//foreach ($roots as $key => $root){
-//    if(isset($root['options'])){
-//        $root['baseUrl'] = 'http://site123.com/uploads';
-//        $roots[$key] = $root;
-//    }
-//}
-//Yii::$app->controllerMap['elfinder']['roots'] = $roots;
-
-
 $js = <<<JS
     function readURL(input) {
         if (input.files && input.files[0]) {

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 
 /**
@@ -18,6 +19,7 @@ use yii\helpers\Json;
  * @property int $created_at
  * @property int $updated_at
  * @property mixed|string|null $val
+ * @property Options[types]|null $types
  */
 class Options extends ActiveRecord
 {
@@ -93,5 +95,22 @@ class Options extends ActiveRecord
             $option = new Options(['code' => $code]);
         }
         return $option;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getTypes()
+    {
+        $options = self::find()
+            ->select(['type'])
+            ->where(['and',
+                ['not', ['type' => null]],
+                ['!=', 'type', '']
+            ])
+            ->groupBy(['type'])
+            ->orderBy(['type' => SORT_ASC])
+            ->all();
+        return ArrayHelper::map($options, 'type', 'type');
     }
 }

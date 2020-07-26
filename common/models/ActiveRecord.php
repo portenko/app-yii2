@@ -26,6 +26,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
             \yii\behaviors\TimestampBehavior::class,
         ];
     }
+
     /**
      * @param int $sort
      * @return |null

@@ -31,11 +31,14 @@ use yii\widgets\ActiveForm;
 
 
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-6">
                 <?= $form->field($model, 'value')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <?= $form->field($model, 'template')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-sm-3">
+                <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
             </div>
         </div>
 

@@ -3,24 +3,21 @@
 namespace site\modules\admin\controllers;
 
 use Yii;
-use common\models\Options;
-use common\models\OptionsSearch;
-use yii\helpers\Json;
+use common\models\Sitemap;
+use common\models\SitemapSearch;
 use yii\web\NotFoundHttpException;
 
 /**
- * Class OptionsController
- * @package site\modules\admin\controllers
+ * SitemapController implements the CRUD actions for Sitemap model.
  */
-class OptionsController extends Controller
+class SitemapController extends Controller
 {
     /**
-     * Lists all Options models.
-     * @return mixed
+     * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new OptionsSearch(['type' => 'options']);
+        $searchModel = new SitemapSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -34,20 +31,14 @@ class OptionsController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Options(['type' => 'options']);
+        $model = new Sitemap();
 
-        if ($model->load(Yii::$app->request->post()))
-        {
-            if(isset($model->json) && count($model->json)){
-                $model->data = Json::encode($model->json);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if(Yii::$app->request->post('save_close')){
+                return $this->redirect(['index']);
             }
-            if($model->save()){
-                if(Yii::$app->request->post('save_close')){
-                    return $this->redirect(['index']);
-                }
-                else {
-                    return $this->redirect(['update', 'id' => $model->id]);
-                }
+            else {
+                return $this->redirect(['update', 'id' => $model->id]);
             }
         }
 
@@ -65,15 +56,9 @@ class OptionsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()))
-        {
-            if(isset($model->json) && count($model->json)){
-                $model->data = Json::encode($model->json);
-            }
-            if($model->save()){
-                if(Yii::$app->request->post('save_close')){
-                    return $this->redirect(['index']);
-                }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if(Yii::$app->request->post('save_close')){
+                return $this->redirect(['index']);
             }
         }
 
@@ -98,12 +83,12 @@ class OptionsController extends Controller
 
     /**
      * @param $id
-     * @return Options|mixed|null
+     * @return Sitemap|null
      * @throws NotFoundHttpException
      */
     public function findModel($id)
     {
-        if (($model = Options::findOne($id)) !== null) {
+        if (($model = Sitemap::findOne($id)) !== null) {
             return $model;
         }
 

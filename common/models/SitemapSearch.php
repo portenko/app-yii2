@@ -4,11 +4,13 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use common\models\Sitemap;
 
 /**
- * OptionsSearch represents the model behind the search form of `common\models\Options`.
+ * Class SitemapSearch
+ * @package common\models
  */
-class OptionsSearch extends Options
+class SitemapSearch extends Sitemap
 {
     /**
      * {@inheritdoc}
@@ -16,8 +18,8 @@ class OptionsSearch extends Options
     public function rules()
     {
         return [
-            [['id', 'created_at', 'updated_at'], 'integer'],
-            [['code', 'name', 'value', 'data', 'template', 'type'], 'safe'],
+            [['id', 'lastmod', 'created_at', 'updated_at'], 'integer'],
+            [['loc', 'changefreq', 'priority'], 'safe'],
         ];
     }
 
@@ -39,22 +41,21 @@ class OptionsSearch extends Options
      */
     public function search($params)
     {
-        $query = Options::find();
+        $query = Sitemap::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 100,
+                'pageSize' => 50,
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'id' => SORT_DESC
+                    'lastmod' => SORT_DESC
                 ],
             ],
         ]);
-
 
         $this->load($params);
 
@@ -67,16 +68,14 @@ class OptionsSearch extends Options
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'lastmod' => $this->lastmod,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'code', $this->code])
-            ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'value', $this->value])
-            ->andFilterWhere(['like', 'data', $this->data])
-            ->andFilterWhere(['like', 'template', $this->template])
-            ->andFilterWhere(['like', 'type', $this->type]);
+        $query->andFilterWhere(['like', 'loc', $this->loc])
+            ->andFilterWhere(['like', 'changefreq', $this->changefreq])
+            ->andFilterWhere(['like', 'priority', $this->priority]);
 
         return $dataProvider;
     }

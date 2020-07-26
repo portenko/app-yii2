@@ -17,7 +17,6 @@ class GeneralController extends OptionsController
      */
     public function actionIndex()
     {
-        //TODO добавить поле visible в options
         $model = Options::getByCode('GENERAL_SETTINGS', true);
 
         if ($model->load(Yii::$app->request->post()))

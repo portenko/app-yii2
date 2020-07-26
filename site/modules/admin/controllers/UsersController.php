@@ -3,14 +3,41 @@
 namespace site\modules\admin\controllers;
 
 use Yii;
-use common\models\User;
+use site\modules\admin\models\User;
 use common\models\UsersSearch;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
+
 /**
- * UsersController implements the CRUD actions for User model.
+ * Class UsersController
+ * @package site\modules\admin\controllers
  */
 class UsersController extends Controller
 {
+    /**
+     * @return array|array[]
+     */
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(),
+            [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@']
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
     /**
      * Lists all User models.
      * @return mixed
