@@ -30,23 +30,24 @@ $changefreq = [
 
 ?>
 
-<div class="sitemap-form card p-2">
+<div class="sitemap-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'loc')->textInput(['maxlength' => true]) ?>
-    <div class="row">
-        <div class="col-sm-4">
-            <?= $form->field($model, 'lastMod')->textInput() ?>
-        </div>
-        <div class="col-sm-4">
-            <?= $form->field($model, 'changefreq')->dropDownList($changefreq) ?>
-        </div>
-        <div class="col-sm-4">
-            <?= $form->field($model, 'priority')->dropDownList($priority) ?>
+    <div class="card p-2">
+        <?= $form->field($model, 'loc')->textInput(['maxlength' => true]) ?>
+        <div class="row">
+            <div class="col-sm-4">
+                <?= $form->field($model, 'lastMod')->textInput() ?>
+            </div>
+            <div class="col-sm-4">
+                <?= $form->field($model, 'changefreq')->dropDownList($changefreq) ?>
+            </div>
+            <div class="col-sm-4">
+                <?= $form->field($model, 'priority')->dropDownList($priority) ?>
+            </div>
         </div>
     </div>
-    <div>
+    <div class="mt-2">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
         <?= Html::submitButton('Save & Close', ['class' => 'btn btn-primary', 'name' => 'save_close', 'value' => 1]) ?>
     </div>
