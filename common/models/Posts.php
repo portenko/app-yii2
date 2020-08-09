@@ -37,6 +37,8 @@ use yii\helpers\Json;
  */
 class Posts extends ActiveRecord
 {
+    const SCENARIO_POSTS = 'posts';
+
     /**
      * {@inheritdoc}
      */
@@ -51,7 +53,8 @@ class Posts extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'publishAt'], 'required'],
+            [['name', 'publishAt'], 'required', 'on' => $this::SCENARIO_POSTS],
+            [['name'], 'required', 'on' => $this::SCENARIO_DEFAULT],
             [['category_id', 'status', 'alternate_id', 'sort', 'author_id', 'publish_at', 'created_at', 'updated_at'], 'integer'],
             [['content'], 'string'],
             [['name', 'url_slug', 'lead', 'cover', 'cover_alt', 'type', 'lang', 'meta_keywords', 'recommended_posts'], 'string', 'max' => 255],

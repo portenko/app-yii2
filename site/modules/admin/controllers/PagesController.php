@@ -11,10 +11,10 @@ use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 /**
- * Class PostsController
+ * Class PagesController
  * @package site\modules\admin\controllers
  */
-class PostsController extends Controller
+class PagesController extends Controller
 {
     /**
      * Lists all Posts models.
@@ -22,7 +22,7 @@ class PostsController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PostsSearch(['type' => 'posts']);
+        $searchModel = new PostsSearch(['type' => 'pages']);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -36,8 +36,7 @@ class PostsController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Posts();
-        $model->setScenario($model::SCENARIO_POSTS);
+        $model = new Posts(['type' => 'pages']);
         $uploadForm = new UploadForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save())
@@ -45,7 +44,7 @@ class PostsController extends Controller
             if (Yii::$app->request->isPost)
             {
                 $uploadForm->imageFile = UploadedFile::getInstance($uploadForm, 'imageFile');
-                $uploadForm->folder = $model::tableName();
+                $uploadForm->folder = 'pages';
                 $uploadForm->prefix = uniqid();
                 $uploadForm->imageWidth = Options::val('POSTS_COVER', 'width');
                 $uploadForm->imageHeight = Options::val('POSTS_COVER', 'height');
@@ -76,7 +75,6 @@ class PostsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->setScenario($model::SCENARIO_POSTS);
         $uploadForm = new UploadForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save())
@@ -84,7 +82,7 @@ class PostsController extends Controller
             if (Yii::$app->request->isPost)
             {
                 $uploadForm->imageFile = UploadedFile::getInstance($uploadForm, 'imageFile');
-                $uploadForm->folder = $model::tableName();
+                $uploadForm->folder = 'pages';
                 $uploadForm->prefix = uniqid();
                 $uploadForm->imageWidth = Options::val('POSTS_COVER', 'width');
                 $uploadForm->imageHeight = Options::val('POSTS_COVER', 'height');
@@ -126,7 +124,7 @@ class PostsController extends Controller
     public function actionDeleteCover($id)
     {
         $model = $this->findModel($id);
-        @unlink(Yii::getAlias('@uploads/posts/'.$model->cover));
+        @unlink(Yii::getAlias('@uploads/pages/'.$model->cover));
         $model->cover = null;
         $model->save(false);
         return $this->redirect(['update', 'id' => $id]);
