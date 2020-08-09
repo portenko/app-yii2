@@ -25,7 +25,6 @@ DefaultAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-
 <div class="wrap">
     <?php
     NavBar::begin([
@@ -75,7 +74,13 @@ DefaultAsset::register($this);
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
+        <?= \yii\widgets\Menu::widget([
+                'items' => [
+                    ['label' => 'Home', 'url' => ['site/index']],
+                    ['label' => 'About', 'url' => ['site/about']],
+                    ['label' => 'Contact', 'url' => ['site/contact']],
+                ]
+        ])?>
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>

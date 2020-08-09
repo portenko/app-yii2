@@ -12,45 +12,46 @@ DatetimepickerAsset::register($this);
 
 ?>
 
-<div class="ads-form card p-2">
+<div class="ads-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <div class="row">
-        <div class="col-sm-5">
-            <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
+    <div class="card p-2">
+        <div class="row">
+            <div class="col-sm-5">
+                <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-sm-7">
+                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            </div>
         </div>
-        <div class="col-sm-7">
-            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+
+        <?= $form->field($model, 'value')->textInput(['maxlength' => true]) ?>
+
+        <?= $form->field($model, 'data')->textarea(['rows' => 6]) ?>
+    
+        <div class="row">
+            <div class="col-sm-3">
+                <?= $form->field($model, 'is_unlimited')->dropDownList([1 => 'Yes', 0 => 'No']) ?>
+            </div>
+            <div class="col-sm-3">
+                <?= $form->field($model, 'dateFrom')->textInput() ?>
+            </div>
+            <div class="col-sm-3">
+                <?= $form->field($model, 'dateTo')->textInput() ?>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <?= $form->field($model, 'status')->dropDownList(Yii::$app->params['statuses']) ?>
+            </div>
+            <div class="col-sm-3">
+                <?= $form->field($model, 'lang')->dropDownList(Yii::$app->params['languages']) ?>
+            </div>
         </div>
     </div>
 
-    <?= $form->field($model, 'value')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'data')->textarea(['rows' => 6]) ?>
-
-    <div class="row">
-        <div class="col-sm-3">
-            <?= $form->field($model, 'is_unlimited')->dropDownList([1 => 'Yes', 0 => 'No']) ?>
-        </div>
-        <div class="col-sm-3">
-            <?= $form->field($model, 'dateFrom')->textInput() ?>
-        </div>
-        <div class="col-sm-3">
-            <?= $form->field($model, 'dateTo')->textInput() ?>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-3">
-            <?= $form->field($model, 'status')->dropDownList(Yii::$app->params['statuses']) ?>
-        </div>
-        <div class="col-sm-3">
-            <?= $form->field($model, 'lang')->dropDownList(Yii::$app->params['languages']) ?>
-        </div>
-    </div>
-
-    <div>
+    <div class="mt-2">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
         <?= Html::submitButton('Save & Close', ['class' => 'btn btn-primary', 'name' => 'save_close', 'value' => 1]) ?>
     </div>

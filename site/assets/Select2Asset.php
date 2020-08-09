@@ -6,7 +6,7 @@ use yii\web\AssetBundle;
 
 /**
  * Class Select2Asset
- * @package site\modules\admin\assets
+ * @package site\assets
  */
 class Select2Asset extends AssetBundle
 {

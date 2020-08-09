@@ -14,7 +14,7 @@ $imageHeight = Options::val('AUTHORS_IMAGE', 'height');
 
 ?>
 
-<div class="authors-form card p-2">
+<div class="authors-form">
 
     <?php $form = ActiveForm::begin([
         'method' => 'post',
@@ -24,53 +24,55 @@ $imageHeight = Options::val('AUTHORS_IMAGE', 'height');
         'enableAjaxValidation' => false
     ]); ?>
 
-    <div class="row">
+    <div class="card pr-2 pt-2 pb-2 pl-2">
+        <div class="row">
 
-        <div class="col-sm-5">
-            <div class="row">
-                <div class="col-sm-12">
-                    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            <div class="col-sm-5">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <?= $form->field($model, 'lang')->dropDownList(Yii::$app->params['languages']) ?>
+                    </div>
+                    <div class="col-sm-6">
+                        <?= $form->field($model, 'status')->dropDownList(Yii::$app->params['statuses']) ?>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <?= $form->field($model, 'lang')->dropDownList(Yii::$app->params['languages']) ?>
-                </div>
-                <div class="col-sm-6">
-                    <?= $form->field($model, 'status')->dropDownList(Yii::$app->params['statuses']) ?>
+
+            <div class="col-sm-2">
+                <div class="user-pic p-2">
+                    <div class="preview">
+                        <?= !empty($model->pic) ? Html::a('<i class="far fa-trash-alt"></i>', ['delete-pic', 'id' => $model->id],
+                            ['class' => 'delete-image', 'title' => 'Delete?']) : '' ?>
+                        <img class="img-thumbnail" src="<?= !empty($model->pic) ? '/uploads/authors/'.$model->pic : '/images/user-avatar.jpg' ?>">
+                    </div>
                 </div>
             </div>
+
+            <div class="col-sm-5">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <?= $form->field($uploadForm, 'imageFile', [
+                            'template' => "{label}<div>{input}\n{hint}\n{error}</div>"
+                        ])->fileInput(['accept' => 'image/*'])->label($model->getAttributeLabel('pic')." ({$imageWidth}x{$imageHeight})") ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <?= $form->field($model, 'pic_alt')->textInput(['maxlength' => true]) ?>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
-
-        <div class="col-sm-2">
-            <div class="user-pic p-2">
-                <div class="preview">
-                    <?= !empty($model->pic) ? Html::a('<i class="far fa-trash-alt"></i>', ['delete-pic', 'id' => $model->id],
-                        ['class' => 'delete-image', 'title' => 'Delete?']) : '' ?>
-                    <img class="img-thumbnail" src="<?= !empty($model->pic) ? '/uploads/authors/'.$model->pic : '/images/user-avatar.jpg' ?>">
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-5">
-            <div class="row">
-                <div class="col-sm-12">
-                    <?= $form->field($uploadForm, 'imageFile', [
-                        'template' => "{label}<div>{input}\n{hint}\n{error}</div>"
-                    ])->fileInput(['accept' => 'image/*'])->label($model->getAttributeLabel('pic')." ({$imageWidth}x{$imageHeight})") ?>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <?= $form->field($model, 'pic_alt')->textInput(['maxlength' => true]) ?>
-                </div>
-            </div>
-        </div>
-
-
     </div>
 
-    <div>
+    <div class="mt-2">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
         <?= Html::submitButton('Save & Close', ['class' => 'btn btn-primary', 'name' => 'save_close', 'value' => 1]) ?>
     </div>

@@ -5,10 +5,12 @@ namespace site\modules\admin\controllers;
 use Yii;
 use common\models\Menus;
 use common\models\MenusSearch;
+use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
 
 /**
- * MenusController implements the CRUD actions for Menus model.
+ * Class MenusController
+ * @package site\modules\admin\controllers
  */
 class MenusController extends Controller
 {
@@ -36,13 +38,18 @@ class MenusController extends Controller
     {
         $model = new Menus();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save())
+        if ($model->load(Yii::$app->request->post()))
         {
-            if(Yii::$app->request->post('save_close')){
-                return $this->redirect(['index']);
+            if(isset($model->json) && count($model->json)){
+                $model->data = Json::encode($model->json);
             }
-            else {
-                return $this->redirect(['update', 'id' => $model->id]);
+            if($model->save()){
+                if(Yii::$app->request->post('save_close')){
+                    return $this->redirect(['index']);
+                }
+                else {
+                    return $this->redirect(['update', 'id' => $model->id]);
+                }
             }
         }
 
@@ -52,20 +59,23 @@ class MenusController extends Controller
     }
 
     /**
-     * Updates an existing Menus model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save())
+        if ($model->load(Yii::$app->request->post()))
         {
-            if(Yii::$app->request->post('save_close')){
-                return $this->redirect(['index']);
+            if(isset($model->json) && count($model->json)){
+                $model->data = Json::encode($model->json);
+            }
+            if($model->save()){
+                if(Yii::$app->request->post('save_close')){
+                    return $this->redirect(['index']);
+                }
             }
         }
 

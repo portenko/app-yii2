@@ -105,7 +105,7 @@ class Posts extends ActiveRecord
      * @throws \yii\base\InvalidConfigException
      */
     public function getPublishAt(){
-        return $this->publish_at?Yii::$app->formatter->asDatetime($this->publish_at, "dd.MM.Y H:i"):null;
+        return $this->publish_at?Yii::$app->formatter->asDatetime($this->publish_at, "dd.MM.yyyy HH:mm"):null;
     }
 
     /**

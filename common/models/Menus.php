@@ -19,6 +19,8 @@ use Yii;
  */
 class Menus extends ActiveRecord
 {
+    public $json = [];
+
     /**
      * {@inheritdoc}
      */
@@ -33,10 +35,11 @@ class Menus extends ActiveRecord
     public function rules()
     {
         return [
-            [['code', 'name', 'created_at', 'updated_at'], 'required'],
+            [['code', 'name'], 'required'],
             [['data'], 'string'],
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['code', 'name', 'comment', 'lang'], 'string', 'max' => 255],
+            [['json'], 'safe']
         ];
     }
 

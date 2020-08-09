@@ -8,23 +8,27 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="categories-form card p-2">
+<div class="categories-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <div class="row">
-        <div class="col-sm-8">
-            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class="col-sm-2">
-            <?= $form->field($model, 'lang')->dropDownList(Yii::$app->params['languages']) ?>
-        </div>
-        <div class="col-sm-2">
-            <?= $form->field($model, 'status')->dropDownList(Yii::$app->params['statuses']) ?>
+    <div class="card pr-2 pt-2 pb-2 pl-2">
+        <div class="row">
+            <div class="col-sm-8">
+                <?= $form->field($model, 'name')
+                    ->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-sm-2">
+                <?= $form->field($model, 'lang')
+                    ->dropDownList(Yii::$app->params['languages']) ?>
+            </div>
+            <div class="col-sm-2">
+                <?= $form->field($model, 'status')
+                    ->dropDownList(Yii::$app->params['statuses']) ?>
+            </div>
         </div>
     </div>
 
-    <div>
+    <div class="mt-2">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
         <?= Html::submitButton('Save & Close', ['class' => 'btn btn-primary', 'name' => 'save_close', 'value' => 1]) ?>
     </div>

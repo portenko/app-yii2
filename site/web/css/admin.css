@@ -293,3 +293,43 @@ body.elfinder .ef-container iframe span.elfinder-navbar-root {
   background-color: #c82333;
   border-color: #bd2130;
 }
+.menu-items .menu-item
+{
+    position: relative;
+}
+.sortable .handle,
+.sortable .remove
+{
+  position: absolute;
+  right: 15px;
+  top: 0;
+  margin: 0;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #495057;
+  height: 34px;
+  padding: 4px 8px;
+  font-size: 18px;
+  cursor: move;
+  opacity: 0.2;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+.sortable .remove
+{
+  right: 45px;
+  padding: 4px 6px;
+  font-size: 17px;
+  cursor: pointer;
+}
+.sortable .handle:hover,
+.sortable .remove:hover
+{
+  opacity: 1;
+}
+
+.form-control::-webkit-input-placeholder { color: #a5a5a5; }  /* WebKit, Blink, Edge */
+.form-control:-moz-placeholder { color: #a5a5a5; }  /* Mozilla Firefox 4 to 18 */
+.form-control::-moz-placeholder { color: #a5a5a5; }  /* Mozilla Firefox 19+ */
+.form-control:-ms-input-placeholder { color: #a5a5a5; }  /* Internet Explorer 10-11 */
+.form-control::-ms-input-placeholder { color: #a5a5a5; }  /* Microsoft Edge */

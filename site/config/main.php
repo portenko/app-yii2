@@ -48,6 +48,14 @@ return [
             'suffix' => '/',
             'rules' => require(__DIR__ . '/rules.php'),
         ],
+        'formatter' => [
+            'dateFormat' => 'dd.MM.yyyy',
+            'timeFormat' => 'HH:mm',
+            'decimalSeparator' => '.',
+            'datetimeFormat' => 'php:d/m/Y H:i',
+            'thousandSeparator' => ' ',
+            'nullDisplay' => '<span class="not-set">—</span>',
+        ],
     ],
     'modules' => [
         'admin' => [

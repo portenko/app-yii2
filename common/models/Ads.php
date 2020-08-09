@@ -79,7 +79,7 @@ class Ads extends ActiveRecord
      * @throws \yii\base\InvalidConfigException
      */
     public function getDateFrom(){
-        return $this->date_from?Yii::$app->formatter->asDatetime($this->date_from, "dd.MM.Y H:i"):null;
+        return $this->date_from?Yii::$app->formatter->asDatetime($this->date_from, "dd.MM.yyyy HH:mm"):null;
     }
 
     /**
@@ -94,6 +94,6 @@ class Ads extends ActiveRecord
      * @throws \yii\base\InvalidConfigException
      */
     public function getDateTo(){
-        return $this->date_to?Yii::$app->formatter->asDatetime($this->date_to, "dd.MM.Y H:i"):null;
+        return $this->date_to?Yii::$app->formatter->asDatetime($this->date_to, "dd.MM.yyyy HH:mm"):null;
     }
 }
